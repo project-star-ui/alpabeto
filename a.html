@@ -170,13 +170,12 @@
             z-index: -1;
         }
 
-        /* Image Pop-up Styling (Default for larger screens - below button) */
+        /* Image Pop-up Styling (Default for all screens - centered, below button) */
+        /* This will be overridden by media queries for specific screen sizes */
         .popup-image {
             position: fixed;
-            left: 50%; /* Center horizontally */
+            left: 50%; /* Center horizontally by default */
             transform: translateX(-50%); /* Adjust for horizontal centering */
-            max-width: 40%; /* Default width for larger screens */
-            max-height: 80vh; /* Default height for larger screens */
             width: auto;
             height: auto;
             z-index: 100; /* Ensure it's on top */
@@ -186,8 +185,10 @@
             transition: opacity 0.5s ease-in-out; /* Smoother transition */
             opacity: 0;
             
-            /* Positioning below the button for larger screens */
-            top: calc(50vh + 150px); /* Approximate position below the button. Adjust '150px' as needed. */
+            /* Default size and position (can be thought of as a fallback or base) */
+            top: calc(50vh + 150px); /* Below button */
+            max-width: 40%; 
+            max-height: 80vh; 
         }
 
         .popup-image.show {
@@ -195,18 +196,31 @@
             opacity: 1;
         }
 
-        /* Responsive adjustment for popup image on smaller screens (above letter A) */
-        @media (max-width: 768px) { /* Applies to screens up to 768px wide (tablets and mobiles) */
+        /* Desktop specific adjustment for popup image (right side) */
+        @media (min-width: 769px) { /* Applies to screens 769px wide and up */
+            .popup-image {
+                top: 50%; /* Vertically center */
+                right: 5%; /* Positioned to the right side */
+                left: auto; /* Remove left positioning */
+                transform: translateY(-50%); /* Vertically center */
+                max-width: 40%; /* Desktop size */
+                max-height: 80vh; /* Desktop height */
+            }
+        }
+
+        /* Mobile and tablet adjustment for popup image (above letter A) */
+        @media (max-width: 768px) { /* Applies to screens up to 768px wide */
             .popup-image {
                 top: 15%; /* Position above the letter A, adjust as needed */
                 left: 50%; /* Center horizontally */
+                right: auto; /* Remove right positioning */
                 transform: translateX(-50%); /* Ensure horizontal centering */
                 max-width: 60%; /* Make it smaller for mobile to avoid overlap */
                 max-height: 30vh; /* Adjust height for mobile */
             }
         }
 
-        /* Further adjustment for very small screens if needed */
+        /* Further adjustment for very small mobile screens */
         @media (max-width: 480px) {
             .popup-image {
                 top: 10%; /* Even higher for very small screens */

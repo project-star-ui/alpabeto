@@ -171,6 +171,29 @@
             pointer-events: none;
             z-index: -1;
         }
+
+        /* Image Pop-up Styling */
+        .popup-image {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 50%; /* Medium size */
+            max-height: 50%; /* Medium size */
+            width: auto;
+            height: auto;
+            z-index: 100; /* Ensure it's on top */
+            display: none; /* Hidden by default */
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+
+        .popup-image.show {
+            display: block;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -189,9 +212,11 @@
         <button class="sound-button" onclick="playSound()">Play A Sound</button>
     </div>
 
+    <!-- Image Pop-up -->
+    <img id="popupImage" class="popup-image" src="img/a.jpg" alt="Letter A related image">
+
     <script>
         // Audio setup
-        // Updated path to your local MP3 file
         let audio = new Audio('audio/A.aac'); 
         
         function playSound() {
@@ -204,6 +229,15 @@
             setTimeout(() => {
                 letter.style.transform = 'scale(1.2)';
             }, 300);
+
+            // Show the image
+            const popupImage = document.getElementById('popupImage');
+            popupImage.classList.add('show');
+
+            // Hide the image after 2.5 seconds (2500 milliseconds)
+            setTimeout(() => {
+                popupImage.classList.remove('show');
+            }, 2500); // Adjust this value for 2 to 3 seconds (e.g., 2000 for 2s, 3000 for 3s)
         }
         
         // Change background patterns periodically

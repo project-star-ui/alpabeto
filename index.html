@@ -11,8 +11,8 @@
             margin: 0;
             padding: 0;
             font-family: 'Nunito', sans-serif;
-            overflow-x: hidden;
-            min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            min-height: 100vh; /* Ensure body takes full viewport height */
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             animation: gradientShift 15s ease infinite;
             background-size: 200% 200%;
@@ -30,25 +30,28 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* Adjusted min-height to ensure button is visible */
-            min-height: 90vh; /* Slightly less than 100vh to allow space */
+            /* Use 100vh to center content, but manage overflow with font-size */
+            min-height: 100vh; 
             padding: 20px;
+            box-sizing: border-box; /* Include padding in height calculation */
             position: relative;
             z-index: 2;
         }
 
         /* Letter A Styling */
         .letter-a {
-            font-size: 25rem; /* Default large size */
+            /* Use viewport units for font-size to make it truly responsive */
+            font-size: 25vmin; /* 'vmin' ensures it scales based on the smaller of viewport width or height */
             font-weight: bold;
             font-family: 'Nunito', sans-serif;
             color: #FF6B6B;
             text-shadow: 8px 8px 0px rgba(0,0,0,0.1);
             transform: scale(1);
             transition: transform 0.3s ease;
-            margin: 20px 0;
+            margin: 20px 0; /* Adjust margin to give space */
             cursor: pointer;
             position: relative;
+            line-height: 1; /* Prevent extra space above/below the letter */
         }
 
         .letter-a:hover {
@@ -69,6 +72,7 @@
             margin-top: 20px;
             font-family: 'Comic Sans MS', cursive, sans-serif;
             outline: none;
+            flex-shrink: 0; /* Prevent button from shrinking */
         }
 
         .sound-button:hover {
@@ -116,33 +120,34 @@
         }
 
         /* Responsive Adjustments */
-        @media (max-width: 1200px) { /* Added a breakpoint for larger screens to reduce font size */
+        @media (min-width: 769px) { /* Desktop specific adjustments */
             .letter-a {
-                font-size: 20rem; /* Slightly smaller for larger tablets/laptops */
+                /* Cap the font size on very large screens to prevent it from being too big */
+                font-size: clamp(15rem, 25vmin, 25rem); 
+            }
+            .sound-button {
+                font-size: 1.5rem;
+                padding: 15px 30px;
             }
         }
 
-        @media (max-width: 992px) {
+        @media (max-width: 768px) { /* Mobile and tablet adjustments */
             .letter-a {
-                font-size: 18rem; /* Adjust for medium screens */
-            }
-        }
-
-        @media (max-width: 768px) {
-            .letter-a {
-                font-size: 15rem; /* Original mobile size */
+                /* Adjust vmin for mobile to ensure it fits well */
+                font-size: 35vmin; /* Larger on mobile to maximize screen usage */
+                margin: 10px 0; /* Reduce margin for mobile */
             }
             
             .sound-button {
                 padding: 12px 24px;
                 font-size: 1.2rem;
-                font-family: 'Nunito', sans-serif;
+                font-family: 'Nunito', sans-serif; /* Ensure font consistency */
             }
         }
 
-        @media (max-width: 576px) {
+        @media (max-width: 480px) { /* Smaller mobile screens */
             .letter-a {
-                font-size: 10rem; /* Even smaller for very small screens */
+                font-size: 45vmin; /* Even larger for very small screens to fill space */
             }
             .sound-button {
                 font-size: 1rem;
@@ -160,7 +165,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 50vw;
+            font-size: 50vw; /* Scales with viewport width */
             font-family: 'Nunito', sans-serif;
             color: rgba(255,107,107,0.1);
             pointer-events: none;

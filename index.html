@@ -176,17 +176,17 @@
         .popup-image {
             position: fixed;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 50%; /* Medium size */
-            max-height: 50%; /* Medium size */
+            right: 5%; /* Positioned to the right side */
+            transform: translateY(-50%); /* Vertically center */
+            max-width: 40%; /* Adjusted for right side, can be tweaked */
+            max-height: 80vh; /* Use viewport height for better scaling */
             width: auto;
             height: auto;
             z-index: 100; /* Ensure it's on top */
             display: none; /* Hidden by default */
             border-radius: 10px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            transition: opacity 0.3s ease-in-out;
+            transition: opacity 0.5s ease-in-out; /* Smoother transition */
             opacity: 0;
         }
 
@@ -230,14 +230,17 @@
                 letter.style.transform = 'scale(1.2)';
             }, 300);
 
-            // Show the image
-            const popupImage = document.getElementById('popupImage');
-            popupImage.classList.add('show');
+            // Show the image after 2.5 seconds (2500 milliseconds)
+            // This delay should be adjusted based on the actual audio content
+            const delayBeforeImageAppears = 2500; // 2.5 seconds
 
-            // Hide the image after 2.5 seconds (2500 milliseconds)
+            const popupImage = document.getElementById('popupImage');
+
             setTimeout(() => {
-                popupImage.classList.remove('show');
-            }, 2500); // Adjust this value for 2 to 3 seconds (e.g., 2000 for 2s, 3000 for 3s)
+                popupImage.classList.add('show');
+            }, delayBeforeImageAppears);
+            
+            // No setTimeout to hide the image, so it stays visible
         }
         
         // Change background patterns periodically

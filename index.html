@@ -119,10 +119,9 @@
             z-index: 1;
         }
 
-        /* Responsive Adjustments */
+        /* Responsive Adjustments for Letter A and Button */
         @media (min-width: 769px) { /* Desktop specific adjustments */
             .letter-a {
-                /* Cap the font size on very large screens to prevent it from being too big */
                 font-size: clamp(15rem, 25vmin, 25rem); 
             }
             .sound-button {
@@ -133,21 +132,20 @@
 
         @media (max-width: 768px) { /* Mobile and tablet adjustments */
             .letter-a {
-                /* Adjust vmin for mobile to ensure it fits well */
-                font-size: 35vmin; /* Larger on mobile to maximize screen usage */
-                margin: 10px 0; /* Reduce margin for mobile */
+                font-size: 35vmin; 
+                margin: 10px 0; 
             }
             
             .sound-button {
                 padding: 12px 24px;
                 font-size: 1.2rem;
-                font-family: 'Nunito', sans-serif; /* Ensure font consistency */
+                font-family: 'Nunito', sans-serif; 
             }
         }
 
         @media (max-width: 480px) { /* Smaller mobile screens */
             .letter-a {
-                font-size: 45vmin; /* Even larger for very small screens to fill space */
+                font-size: 45vmin; 
             }
             .sound-button {
                 font-size: 1rem;
@@ -165,14 +163,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 50vw; /* Scales with viewport width */
+            font-size: 50vw; 
             font-family: 'Nunito', sans-serif;
             color: rgba(255,107,107,0.1);
             pointer-events: none;
             z-index: -1;
         }
 
-        /* Image Pop-up Styling */
+        /* Image Pop-up Styling (Default for larger screens) */
         .popup-image {
             position: fixed;
             top: 50%;
@@ -193,6 +191,18 @@
         .popup-image.show {
             display: block;
             opacity: 1;
+        }
+
+        /* Responsive adjustment for popup image on smaller screens */
+        @media (max-width: 768px) { /* Applies to screens up to 768px wide (tablets and mobiles) */
+            .popup-image {
+                top: 10%; /* Adjust this value to move it higher or lower */
+                left: 50%; /* Center horizontally */
+                right: auto; /* Remove right positioning */
+                transform: translateX(-50%); /* Center horizontally */
+                max-width: 80%; /* Make it wider for mobile */
+                max-height: 40vh; /* Adjust height for mobile */
+            }
         }
     </style>
 </head>

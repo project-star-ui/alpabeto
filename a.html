@@ -170,7 +170,7 @@
             z-index: -1;
         }
 
-        /* Image Pop-up Styling */
+        /* Image Pop-up Styling (Default for larger screens - below button) */
         .popup-image {
             position: fixed;
             left: 50%; /* Center horizontally */
@@ -195,20 +195,23 @@
             opacity: 1;
         }
 
-        /* Responsive adjustment for popup image on smaller screens */
+        /* Responsive adjustment for popup image on smaller screens (above letter A) */
         @media (max-width: 768px) { /* Applies to screens up to 768px wide (tablets and mobiles) */
             .popup-image {
-                top: calc(50vh + 100px); /* Adjust for mobile, potentially smaller offset */
-                max-width: 80%; /* Make it wider for mobile */
-                max-height: 40vh; /* Adjust height for mobile */
+                top: 15%; /* Position above the letter A, adjust as needed */
+                left: 50%; /* Center horizontally */
+                transform: translateX(-50%); /* Ensure horizontal centering */
+                max-width: 60%; /* Make it smaller for mobile to avoid overlap */
+                max-height: 30vh; /* Adjust height for mobile */
             }
         }
 
         /* Further adjustment for very small screens if needed */
         @media (max-width: 480px) {
             .popup-image {
-                top: calc(50vh + 80px); /* Even smaller offset for very small screens */
-                max-width: 90%;
+                top: 10%; /* Even higher for very small screens */
+                max-width: 70%; /* Slightly larger for very small screens if needed */
+                max-height: 25vh; /* Adjust height */
             }
         }
     </style>

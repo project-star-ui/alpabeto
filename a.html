@@ -208,10 +208,10 @@
             }
         }
 
-        /* Mobile and tablet adjustment for popup image (above letter A) */
+        /* Mobile and tablet adjustment for popup image (centered, above letter A) */
         @media (max-width: 768px) { /* Applies to screens up to 768px wide */
             .popup-image {
-                top: 15%; /* Position above the letter A, adjust as needed */
+                top: 10%; /* Moved up a bit more, adjust as needed */
                 left: 50%; /* Center horizontally */
                 right: auto; /* Remove right positioning */
                 transform: translateX(-50%); /* Ensure horizontal centering */
@@ -223,7 +223,7 @@
         /* Further adjustment for very small mobile screens */
         @media (max-width: 480px) {
             .popup-image {
-                top: 10%; /* Even higher for very small screens */
+                top: 5%; /* Even higher for very small screens */
                 max-width: 70%; /* Slightly larger for very small screens if needed */
                 max-height: 25vh; /* Adjust height */
             }

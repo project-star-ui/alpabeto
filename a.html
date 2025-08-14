@@ -170,14 +170,13 @@
             z-index: -1;
         }
 
-        /* Image Pop-up Styling (Default for larger screens) */
+        /* Image Pop-up Styling */
         .popup-image {
             position: fixed;
-            top: 50%;
-            right: 5%; /* Positioned to the right side */
-            transform: translateY(-50%); /* Vertically center */
-            max-width: 40%; /* Adjusted for right side, can be tweaked */
-            max-height: 80vh; /* Use viewport height for better scaling */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Adjust for horizontal centering */
+            max-width: 40%; /* Default width for larger screens */
+            max-height: 80vh; /* Default height for larger screens */
             width: auto;
             height: auto;
             z-index: 100; /* Ensure it's on top */
@@ -186,6 +185,9 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
             transition: opacity 0.5s ease-in-out; /* Smoother transition */
             opacity: 0;
+            
+            /* Positioning below the button for larger screens */
+            top: calc(50vh + 150px); /* Approximate position below the button. Adjust '150px' as needed. */
         }
 
         .popup-image.show {
@@ -196,12 +198,17 @@
         /* Responsive adjustment for popup image on smaller screens */
         @media (max-width: 768px) { /* Applies to screens up to 768px wide (tablets and mobiles) */
             .popup-image {
-                top: 10%; /* Adjust this value to move it higher or lower */
-                left: 50%; /* Center horizontally */
-                right: auto; /* Remove right positioning */
-                transform: translateX(-50%); /* Center horizontally */
+                top: calc(50vh + 100px); /* Adjust for mobile, potentially smaller offset */
                 max-width: 80%; /* Make it wider for mobile */
                 max-height: 40vh; /* Adjust height for mobile */
+            }
+        }
+
+        /* Further adjustment for very small screens if needed */
+        @media (max-width: 480px) {
+            .popup-image {
+                top: calc(50vh + 80px); /* Even smaller offset for very small screens */
+                max-width: 90%;
             }
         }
     </style>
@@ -241,7 +248,6 @@
             }, 300);
 
             // Show the image after 2.5 seconds (2500 milliseconds)
-            // This delay should be adjusted based on the actual audio content
             const delayBeforeImageAppears = 2500; // 2.5 seconds
 
             const popupImage = document.getElementById('popupImage');

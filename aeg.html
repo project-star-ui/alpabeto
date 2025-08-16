@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Letter A - Super Fun Learning!</title>
+    <title>Letter A - Fun Learning!</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         /* Bouncy teentitans GO vibe! */
@@ -199,16 +199,6 @@
             border-bottom: 8px solid #FFD166;
         }
 
-        /* Removed .popup-text styling as the element will be removed */
-        /* .popup-text {
-            padding: 20px;
-            text-align: center;
-            background: #06D6A0;
-            color: white;
-            font-size: 32px;
-            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
-        } */
-
         .bouncing-hearts {
             position: absolute;
             width: 100%;
@@ -259,10 +249,6 @@
                 font-size: 22px;
                 padding: 15px 30px;
             }
-            /* Removed .popup-text media query as the element will be removed */
-            /* .popup-text {
-                font-size: 24px;
-            } */
         }
     </style>
 </head>
@@ -274,14 +260,12 @@
     </div>
     
     <div class="button-container">
-        <button class="button" id="playSoundBtn"><span>PLAY THE SOUND!</span></button>
+        <button class="button" id="playSoundBtn"><span>PINDUTIN PARA MARINIG!</span></button>
     </div>
 
     <div class="popup-container" id="popupContainer">
         <div class="popup-content">
             <img class="popup-image" src="img/a.jpg" alt="Playful cartoon dog with big eyes, tongue out, colorful background - A is for Aso (Dog)">
-            <!-- REMOVED THE FOLLOWING LINE: -->
-            <!-- <div class="popup-text">A IS FOR ASO! (DOG)</div> -->
         </div>
     </div>
 
@@ -310,23 +294,24 @@
                 const randomShapeType = shapes[Math.floor(Math.random() * shapes.length)];
                 const randomColor = colors[Math.floor(Math.random() * colors.length)];
                 
-                // Basic shape styling
+                // Basic shape styling - Increased size range
                 let shapeHTML = '';
+                const size = Math.random() * 80 + 40; // Increased from 20-50px to 40-120px
                 switch (randomShapeType) {
                     case 'circle':
-                        shapeHTML = `<div style="width: ${Math.random() * 50 + 20}px; height: ${Math.random() * 50 + 20}px; background-color: ${randomColor}; border-radius: 50%;"></div>`;
+                        shapeHTML = `<div style="width: ${size}px; height: ${size}px; background-color: ${randomColor}; border-radius: 50%;"></div>`;
                         break;
                     case 'triangle':
-                        shapeHTML = `<div style="width: 0; height: 0; border-left: ${Math.random() * 30 + 15}px solid transparent; border-right: ${Math.random() * 30 + 15}px solid transparent; border-bottom: ${Math.random() * 50 + 20}px solid ${randomColor};"></div>`;
+                        shapeHTML = `<div style="width: 0; height: 0; border-left: ${size / 2}px solid transparent; border-right: ${size / 2}px solid transparent; border-bottom: ${size}px solid ${randomColor};"></div>`;
                         break;
                     case 'square':
-                        shapeHTML = `<div style="width: ${Math.random() * 50 + 20}px; height: ${Math.random() * 50 + 20}px; background-color: ${randomColor};"></div>`;
+                        shapeHTML = `<div style="width: ${size}px; height: ${size}px; background-color: ${randomColor};"></div>`;
                         break;
                     case 'pentagon':
-                        shapeHTML = `<div style="width: ${Math.random() * 50 + 20}px; height: ${Math.random() * 50 + 20}px; background-color: ${randomColor}; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);"></div>`;
+                        shapeHTML = `<div style="width: ${size}px; height: ${size}px; background-color: ${randomColor}; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);"></div>`;
                         break;
                     case 'star':
-                        shapeHTML = `<div style="width: ${Math.random() * 50 + 20}px; height: ${Math.random() * 50 + 20}px; background-color: ${randomColor}; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);"></div>`;
+                        shapeHTML = `<div style="width: ${size}px; height: ${size}px; background-color: ${randomColor}; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);"></div>`;
                         break;
                 }
                 shape.innerHTML = shapeHTML;
@@ -362,15 +347,17 @@
                     this.style.boxShadow = '0 8px 0 #E84A5F, 0 15px 20px rgba(0, 0, 0, 0.2)';
                 }, 100);
 
-                // Play letter sound and show popup after a short delay
+                // Play letter sound immediately
+                letterSound.currentTime = 0; // Rewind to start
+                letterSound.play();
+                
+                // Show popup and trigger celebration after 3 seconds
                 setTimeout(() => {
-                    letterSound.currentTime = 0; // Rewind to start
-                    letterSound.play();
                     popupContainer.classList.add('active');
                     celebrateSound.currentTime = 0;
                     celebrateSound.play();
                     triggerCelebration();
-                }, 0); // Delay to let pop sound play a bit
+                }, 3000); // 3000 milliseconds = 3 seconds
 
                 // Add a bounce effect to the letter
                 letterElement.style.transition = 'none'; // Disable smooth transition for immediate bounce
@@ -424,21 +411,22 @@
                     const randomColor = colors[Math.floor(Math.random() * colors.length)];
                     
                     let shapeHTML = '';
+                    const size = Math.random() * 50 + 20; // Adjusted size for celebration shapes
                     switch (randomShapeType) {
                         case 'circle':
-                            shapeHTML = `<div style="width: ${Math.random() * 30 + 10}px; height: ${Math.random() * 30 + 10}px; background-color: ${randomColor}; border-radius: 50%;"></div>`;
+                            shapeHTML = `<div style="width: ${size}px; height: ${size}px; background-color: ${randomColor}; border-radius: 50%;"></div>`;
                             break;
                         case 'triangle':
-                            shapeHTML = `<div style="width: 0; height: 0; border-left: ${Math.random() * 20 + 5}px solid transparent; border-right: ${Math.random() * 20 + 5}px solid transparent; border-bottom: ${Math.random() * 30 + 10}px solid ${randomColor};"></div>`;
+                            shapeHTML = `<div style="width: 0; height: 0; border-left: ${size / 2}px solid transparent; border-right: ${size / 2}px solid transparent; border-bottom: ${size}px solid ${randomColor};"></div>`;
                             break;
                         case 'square':
-                            shapeHTML = `<div style="width: ${Math.random() * 30 + 10}px; height: ${Math.random() * 30 + 10}px; background-color: ${randomColor};"></div>`;
+                            shapeHTML = `<div style="width: ${size}px; height: ${size}px; background-color: ${randomColor};"></div>`;
                             break;
                         case 'pentagon':
-                            shapeHTML = `<div style="width: ${Math.random() * 30 + 10}px; height: ${Math.random() * 30 + 10}px; background-color: ${randomColor}; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);"></div>`;
+                            shapeHTML = `<div style="width: ${size}px; height: ${size}px; background-color: ${randomColor}; clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);"></div>`;
                             break;
                         case 'star':
-                            shapeHTML = `<div style="width: ${Math.random() * 30 + 10}px; height: ${Math.random() * 30 + 10}px; background-color: ${randomColor}; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);"></div>`;
+                            shapeHTML = `<div style="width: ${size}px; height: ${size}px; background-color: ${randomColor}; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);"></div>`;
                             break;
                     }
                     shape.innerHTML = shapeHTML;

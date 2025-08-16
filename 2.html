@@ -65,6 +65,45 @@
             }
         }
 
+        .main-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 60px;
+            color: #333;
+            text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            text-align: center;
+            z-index: 10;
+            animation: bounceIn 1s ease-out; /* Initial bounce animation */
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            70% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* New animation for the main title to make it continuously move */
+        @keyframes titleFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .main-title.animated {
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
         .letter-container {
             position: relative;
             z-index: 10;
@@ -85,12 +124,23 @@
             transform-style: preserve-3d;
             min-width: 150px; /* Ensure letter doesn't shrink too much */
             text-align: center;
+            animation: letterBounce 2s infinite ease-in-out; /* Added animation for the letter */
+        }
+
+        @keyframes letterBounce {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-10px) scale(1.02);
+            }
         }
 
         .letter:hover {
             transform: scale(1.1) rotateY(20deg);
             text-shadow: 12px 12px 0 rgba(0, 0, 0, 0.2),
                          20px 20px 30px rgba(0, 0, 0, 0.15);
+            animation: none; /* Stop continuous bounce on hover */
         }
 
         .nav-button {
@@ -279,6 +329,10 @@
         }
 
         @media (max-width: 768px) {
+            .main-title {
+                font-size: 45px;
+                margin-bottom: 30px;
+            }
             .letter {
                 font-size: 180px;
             }
@@ -292,21 +346,18 @@
                 width: 50px;
                 height: 50px;
             }
+            /* Ensure letter-container remains flex row for mobile to place arrows beside letter */
             .letter-container {
-                flex-direction: column; /* Stack elements vertically on small screens */
+                flex-direction: row; /* Keep arrows beside the letter */
                 gap: 15px;
-            }
-            .letter {
-                order: 2; /* Place letter below nav buttons */
-            }
-            .nav-buttons-wrapper {
-                order: 1; /* Place nav buttons above letter */
-                display: flex;
-                gap: 20px;
             }
         }
 
         @media (max-width: 480px) {
+            .main-title {
+                font-size: 35px;
+                margin-bottom: 20px;
+            }
             .letter {
                 font-size: 120px;
             }
@@ -319,12 +370,17 @@
                 width: 45px;
                 height: 45px;
             }
+            .letter-container {
+                gap: 10px; /* Reduce gap further for very small screens */
+            }
         }
     </style>
 </head>
 <body>
     <div class="floating-shapes" id="floatingShapes"></div>
     
+    <h1 class="main-title animated">Alphabet Fun Learning!</h1>
+
     <div class="letter-container">
         <button class="nav-button" id="prevLetterBtn">&lt;</button>
         <div class="letter" id="letter">A</div>
@@ -392,6 +448,7 @@
             const bouncingHearts = document.getElementById('bouncingHearts');
             const celebrationElement = document.getElementById('celebration');
             const floatingShapes = document.getElementById('floatingShapes');
+            const mainTitle = document.querySelector('.main-title'); // Get the main title element
 
             // Function to update the displayed letter, audio, and image
             function updateLetterContent() {
@@ -443,7 +500,8 @@
                     triggerCelebration();
                 }, 3000);
 
-                // Add a bounce effect to the letter
+                // Add a bounce effect to the letter (this is already handled by the CSS animation 'letterBounce')
+                // The existing bounce effect on click is still useful for immediate feedback.
                 letterElement.style.transition = 'none';
                 letterElement.style.transform = 'scale(1.2) rotateY(0deg)';
                 setTimeout(() => {
@@ -544,6 +602,11 @@
 
             // Initialize the first letter content
             updateLetterContent();
+
+            // Add the continuous animation class to the title after its initial bounce
+            mainTitle.addEventListener('animationend', () => {
+                mainTitle.classList.add('animated');
+            }, { once: true }); // Ensure this listener only runs once
         });
     </script>
 </body>

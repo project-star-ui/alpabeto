@@ -249,6 +249,7 @@
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
             border: 8px solid #FFD166;
+            position: relative; /* Added for positioning the close button */
         }
 
         .popup-container.active .popup-content {
@@ -259,6 +260,40 @@
             width: 100%;
             display: block;
             border-bottom: 8px solid #FFD166;
+        }
+
+        /* Style for the close button */
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #FF6BB5; /* Match button colors */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 0 #E84A5F,
+                        0 6px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            z-index: 10; /* Ensure it's above the image */
+        }
+
+        .close-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 0 #E84A5F,
+                        0 8px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .close-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 0 #E84A5F;
         }
 
         .bouncing-hearts {
@@ -459,6 +494,13 @@
                 font-size: 22px;
                 padding: 15px 30px;
             }
+            .close-button {
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+                top: 10px;
+                right: 10px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -490,6 +532,13 @@
             .start-button {
                 font-size: 18px;
                 padding: 12px 25px;
+            }
+            .close-button {
+                width: 30px;
+                height: 30px;
+                font-size: 18px;
+                top: 8px;
+                right: 8px;
             }
         }
     </style>
@@ -524,6 +573,7 @@
 
         <div class="popup-container" id="popupContainer">
             <div class="popup-content">
+                <button class="close-button" id="closePopupBtn">X</button> <!-- Added X button -->
                 <img class="popup-image" id="popupImage" src="" alt="Letter related image">
             </div>
         </div>
@@ -580,8 +630,7 @@
             const bouncingHearts = document.getElementById('bouncingHearts');
             const celebrationElement = document.getElementById('celebration');
             const floatingShapes = document.getElementById('floatingShapes');
-            // Removed mainTitle as the element is removed
-            // const mainTitle = document.querySelector('.main-title'); 
+            const closePopupBtn = document.getElementById('closePopupBtn'); // Get the new close button
 
             // Intro Screen Elements
             const introScreen = document.getElementById('intro-screen');
@@ -613,6 +662,12 @@
             // Event Listeners for navigation
             nextLetterBtn.addEventListener('click', showNextLetter);
             prevLetterBtn.addEventListener('click', showPrevLetter);
+
+            // Function to close the popup
+            function closePopup() {
+                popupContainer.classList.remove('active');
+                celebrationElement.classList.remove('active');
+            }
 
             // Play Sound Button Logic
             playSoundBtn.addEventListener('click', function() {
@@ -655,10 +710,12 @@
             // Close popup when clicking outside
             popupContainer.addEventListener('click', function(event) {
                 if (event.target === popupContainer) {
-                    popupContainer.classList.remove('active');
-                    celebrationElement.classList.remove('active');
+                    closePopup();
                 }
             });
+
+            // Close popup when X button is clicked
+            closePopupBtn.addEventListener('click', closePopup);
 
             // Floating Shapes Background Generation
             const shapes = ['circle', 'triangle', 'square', 'pentagon', 'star'];
@@ -772,8 +829,6 @@
             function hideIntroScreen() {
                 introScreen.classList.add('hidden');
                 mainContent.classList.add('active'); // Show main content
-                // Removed mainTitle animation as the element is removed
-                // mainTitle.classList.add('animated');
                 // Initialize the first letter content after the main content is visible
                 updateLetterContent();
             }

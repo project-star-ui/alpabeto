@@ -28,7 +28,7 @@
 
         /* Page Title */
         .page-title {
-            font-size: 70px;
+            font-size: 90px; /* Made larger */
             color: black; /* Black title */
             text-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2),
                          15px 15px 20px rgba(0, 0, 0, 0.1);
@@ -36,7 +36,7 @@
             margin-bottom: 40px;
             position: relative;
             z-index: 10;
-            animation: bounceIn 1s ease-out forwards;
+            animation: bounceIn 1s ease-out forwards, titlePulse 3s infinite alternate; /* Added continuous pulse */
             letter-spacing: 2px;
             text-align: center;
         }
@@ -56,6 +56,11 @@
             100% {
                 transform: scale(1) translateY(0);
             }
+        }
+
+        @keyframes titlePulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.02); } /* Subtle pulse */
         }
 
         .floating-shapes {
@@ -108,17 +113,17 @@
             max-width: 1200px;
             width: 90%;
             padding: 30px;
-            background-color: transparent; /* Made transparent */
+            background-color: transparent;
             border-radius: 30px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Kept shadow for floating effect */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             margin-bottom: 50px;
         }
 
         /* Letter Card Design */
         .letter-card {
-            background-color: white; /* Clean white background for the letter */
-            color: black; /* Font color is black */
-            border-radius: 20px; /* Rounded corners for the card */
+            background-color: white;
+            color: black;
+            border-radius: 20px;
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -126,37 +131,45 @@
             justify-content: center;
             font-size: 80px;
             font-weight: bold;
-            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             
-            /* Colorful, chunky border */
-            border: 8px solid; /* Will be set by JS for different colors */
-            border-bottom-width: 12px; /* Thicker bottom border for depth */
+            border: 8px solid;
+            border-bottom-width: 12px;
 
-            /* Strong, playful shadow */
             box-shadow: 
-                8px 8px 0 rgba(0, 0, 0, 0.3), /* Offset shadow for pop-out effect */
-                15px 15px 20px rgba(0, 0, 0, 0.1); /* General shadow */
+                8px 8px 0 rgba(0, 0, 0, 0.3),
+                15px 15px 20px rgba(0, 0, 0, 0.1);
             
             position: relative;
             overflow: hidden;
             aspect-ratio: 1 / 1;
             transform-style: preserve-3d;
+
+            /* Continuous subtle float animation for cards */
+            animation: cardFloat 4s infinite alternate ease-in-out;
+        }
+
+        @keyframes cardFloat {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-5px); } /* Subtle vertical float */
         }
 
         .letter-card:hover {
             transform: translateY(-8px) scale(1.05); /* Lift and scale */
             box-shadow: 
-                12px 12px 0 rgba(0, 0, 0, 0.4), /* Deeper offset shadow */
-                20px 20px 30px rgba(0, 0, 0, 0.2); /* Larger general shadow */
+                12px 12px 0 rgba(0, 0, 0, 0.4),
+                20px 20px 30px rgba(0, 0, 0, 0.2);
+            animation: none; /* Disable continuous float on hover */
         }
 
         .letter-card:active {
-            transform: translateY(2px) scale(0.98); /* Press down effect */
+            transform: translateY(2px) scale(0.98);
             box-shadow: 
-                4px 4px 0 rgba(0, 0, 0, 0.2), /* Smaller offset shadow */
-                8px 8px 10px rgba(0, 0, 0, 0.1); /* Smaller general shadow */
+                4px 4px 0 rgba(0, 0, 0, 0.2),
+                8px 8px 10px rgba(0, 0, 0, 0.1);
+            animation: none; /* Disable continuous float on active */
         }
 
         /* Popup styles */
@@ -190,7 +203,7 @@
             transform: scale(0.5) rotate(5deg);
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-            border: 8px solid #FF6BB5; /* Pink border for popup */
+            border: 8px solid #FF6BB5;
             position: relative;
         }
 
@@ -201,14 +214,14 @@
         .popup-image {
             width: 100%;
             display: block;
-            border-bottom: 8px solid #FF6BB5; /* Pink border for image bottom */
+            border-bottom: 8px solid #FF6BB5;
         }
 
         .popup-close-btn {
             position: absolute;
             top: 15px;
             right: 15px;
-            background: linear-gradient(45deg, #E84A5F, #FF6BB5); /* Match button gradient */
+            background: linear-gradient(45deg, #E84A5F, #FF6BB5);
             color: white;
             border: none;
             border-radius: 50%;
@@ -282,7 +295,7 @@
         /* Responsive adjustments for grid */
         @media (max-width: 768px) {
             .page-title {
-                font-size: 50px;
+                font-size: 60px; /* Adjusted for tablet */
                 margin-top: 20px;
                 margin-bottom: 20px;
             }
@@ -306,23 +319,21 @@
 
         @media (max-width: 480px) {
             .page-title {
-                font-size: 35px;
+                font-size: 45px; /* Adjusted for mobile */
                 margin-top: 15px;
                 margin-bottom: 15px;
             }
             .alphabet-grid-container {
-                /* Single column for mobile */
                 grid-template-columns: 1fr; 
                 gap: 15px;
                 padding: 15px;
             }
             .letter-card {
-                /* Smaller size for mobile cards */
-                font-size: 40px; /* Reduced font size */
-                padding: 8px; /* Reduced padding */
-                min-width: 70px; /* Ensure it doesn't get too small */
-                max-width: 100px; /* Cap max width for single column */
-                margin: 0 auto; /* Center cards in the single column */
+                font-size: 40px;
+                padding: 8px;
+                min-width: 70px;
+                max-width: 100px;
+                margin: 0 auto;
             }
             .popup-content {
                 width: 90%;

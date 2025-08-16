@@ -370,7 +370,7 @@
                     celebrateSound.currentTime = 0;
                     celebrateSound.play();
                     triggerCelebration();
-                }, 3000); // Delay to let pop sound play a bit
+                }, 0); // Delay to let pop sound play a bit
 
                 // Add a bounce effect to the letter
                 letterElement.style.transition = 'none'; // Disable smooth transition for immediate bounce
@@ -459,7 +459,7 @@
                 // Hide celebration after a few seconds
                 setTimeout(() => {
                     celebrationElement.classList.remove('active');
-                }, 4000); // Adjust time as needed
+                }, 2000); // Adjust time as needed
             }
         });
     </script>

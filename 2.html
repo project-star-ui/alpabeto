@@ -117,14 +117,15 @@
         .letter {
             font-size: 250px;
             font-weight: bold;
-            color: black;
+            color: black; /* Changed to black font color */
             text-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2),
                          15px 15px 20px rgba(0, 0, 0, 0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
             min-width: 150px; /* Ensure letter doesn't shrink too much */
             text-align: center;
-            animation: letterBounce 2s infinite ease-in-out; /* Added animation for the letter */
+            animation: letterBounce 2s infinite ease-in-out, glow 2s infinite alternate; /* Added glow animation */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Initial subtle shadow for depth */
         }
 
         @keyframes letterBounce {
@@ -136,11 +137,22 @@
             }
         }
 
+        /* New glow animation for the letter */
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 0, 0, 0.4);
+            }
+        }
+
         .letter:hover {
             transform: scale(1.1) rotateY(20deg);
             text-shadow: 12px 12px 0 rgba(0, 0, 0, 0.2),
                          20px 20px 30px rgba(0, 0, 0, 0.15);
-            animation: none; /* Stop continuous bounce on hover */
+            animation: none; /* Stop continuous bounce and glow on hover */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.6); /* Stronger glow on hover */
         }
 
         .nav-button {
@@ -328,6 +340,128 @@
             display: block;
         }
 
+        /* Intro Loading Screen Styles */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #b5ffb5; /* Changed to match main background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 1s ease-out;
+            font-family: 'Fredoka One', cursive;
+            color: #333;
+            background-image: radial-gradient(circle, #d3ffd3 5%, transparent 5%),
+                              radial-gradient(circle, #d3ffd3 5%, transparent 5%);
+            background-size: 80px 80px;
+            background-position: 0 0, 40px 40px;
+        }
+
+        #intro-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-title {
+            font-size: 70px;
+            margin-bottom: 30px;
+            text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
+            animation: bounceIn 1s ease-out;
+        }
+
+        .loading-bar-container {
+            width: 80%;
+            max-width: 400px;
+            height: 40px;
+            background-color: #f0f0f0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 5px;
+        }
+
+        .loading-letter {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 0 2px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease-out;
+        }
+
+        .loading-letter.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* New style for the "Tap to Start" button */
+        .start-button {
+            background: linear-gradient(45deg, #FF6BB5, #FFB36B); /* Similar to main button */
+            color: white; /* White text for contrast */
+            border: none;
+            padding: 20px 40px;
+            font-size: 28px;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #E84A5F,
+                       0 15px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            font-family: 'Fredoka One', cursive;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+            transform: translateY(0);
+            animation: pulse 2s infinite; /* Reuse pulse animation */
+            opacity: 0; /* Initially hidden */
+        }
+
+        .start-button.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .start-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 13px 0 #E84A5F,
+                       0 20px 25px rgba(0, 0, 0, 0.25);
+            animation: none;
+        }
+
+        .start-button:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #E84A5F;
+        }
+
+        /* Main content initially hidden */
+        #main-content {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            display: flex; /* Ensure it's a flex container */
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            position: absolute; /* Position absolutely to allow intro screen to cover */
+            top: 0;
+            left: 0;
+            pointer-events: none; /* Disable interaction until active */
+        }
+
+        #main-content.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
         @media (max-width: 768px) {
             .main-title {
                 font-size: 45px;
@@ -351,6 +485,19 @@
                 flex-direction: row; /* Keep arrows beside the letter */
                 gap: 15px;
             }
+            .intro-title {
+                font-size: 50px;
+            }
+            .loading-bar-container {
+                height: 30px;
+            }
+            .loading-letter {
+                font-size: 24px;
+            }
+            .start-button {
+                font-size: 22px;
+                padding: 15px 30px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -373,34 +520,60 @@
             .letter-container {
                 gap: 10px; /* Reduce gap further for very small screens */
             }
+            .intro-title {
+                font-size: 40px;
+            }
+            .loading-bar-container {
+                height: 25px;
+            }
+            .loading-letter {
+                font-size: 20px;
+            }
+            .start-button {
+                font-size: 18px;
+                padding: 12px 25px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="floating-shapes" id="floatingShapes"></div>
-    
-    <h1 class="main-title animated">Alphabet Fun Learning!</h1>
-
-    <div class="letter-container">
-        <button class="nav-button" id="prevLetterBtn">&lt;</button>
-        <div class="letter" id="letter">A</div>
-        <button class="nav-button" id="nextLetterBtn">&gt;</button>
-    </div>
-    
-    <div class="button-container">
-        <button class="button" id="playSoundBtn"><span>PINDUTIN!</span></button>
-    </div>
-
-    <div class="popup-container" id="popupContainer">
-        <div class="popup-content">
-            <img class="popup-image" id="popupImage" src="" alt="Letter related image">
+    <!-- Intro Loading Screen -->
+    <div id="intro-screen">
+        <h1 class="intro-title">Tara, Alamin Natin!</h1>
+        <div class="loading-bar-container">
+            <!-- Letters will be dynamically added here -->
         </div>
+        <!-- Changed to a button element -->
+        <button class="start-button" id="tapToStart">Pindutin para Magsimula!</button>
     </div>
 
-    <div class="bouncing-hearts" id="bouncingHearts"></div>
-    
-    <div class="celebration" id="celebration">
-        <div class="floating-shapes" id="celebrationShapes"></div>
+    <!-- Main Content (initially hidden) -->
+    <div id="main-content">
+        <div class="floating-shapes" id="floatingShapes"></div>
+        
+        <h1 class="main-title">Alphabet Fun Learning!</h1>
+
+        <div class="letter-container">
+            <button class="nav-button" id="prevLetterBtn">&lt;</button>
+            <div class="letter" id="letter">A</div>
+            <button class="nav-button" id="nextLetterBtn">&gt;</button>
+        </div>
+        
+        <div class="button-container">
+            <button class="button" id="playSoundBtn"><span>PINDUTIN!</span></button>
+        </div>
+
+        <div class="popup-container" id="popupContainer">
+            <div class="popup-content">
+                <img class="popup-image" id="popupImage" src="" alt="Letter related image">
+            </div>
+        </div>
+
+        <div class="bouncing-hearts" id="bouncingHearts"></div>
+        
+        <div class="celebration" id="celebration">
+            <div class="floating-shapes" id="celebrationShapes"></div>
+        </div>
     </div>
 
     <!-- Audio elements will be dynamically loaded -->
@@ -449,6 +622,12 @@
             const celebrationElement = document.getElementById('celebration');
             const floatingShapes = document.getElementById('floatingShapes');
             const mainTitle = document.querySelector('.main-title'); // Get the main title element
+
+            // Intro Screen Elements
+            const introScreen = document.getElementById('intro-screen');
+            const loadingBarContainer = introScreen.querySelector('.loading-bar-container');
+            const tapToStartButton = document.getElementById('tapToStart'); // Now a button
+            const mainContent = document.getElementById('main-content');
 
             // Function to update the displayed letter, audio, and image
             function updateLetterContent() {
@@ -600,13 +779,47 @@
                 }, 2000);
             }
 
-            // Initialize the first letter content
-            updateLetterContent();
+            // Intro Screen Logic
+            // Use the letters from lettersData for the loading animation
+            const loadingLetters = lettersData.map(data => data.letter);
+            let loadedCount = 0;
+            const colorfulLoadingColors = ['#FF6BB5', '#6B8EFF', '#FFD6A5', '#FAFF79', '#9BF6FF', '#BDB2FF']; // Array of colors
 
-            // Add the continuous animation class to the title after its initial bounce
-            mainTitle.addEventListener('animationend', () => {
+            function animateLoadingBar() {
+                if (loadedCount < loadingLetters.length) {
+                    const letterSpan = document.createElement('span');
+                    letterSpan.classList.add('loading-letter');
+                    letterSpan.textContent = loadingLetters[loadedCount];
+                    // Assign a random color from the array
+                    letterSpan.style.color = colorfulLoadingColors[Math.floor(Math.random() * colorfulLoadingColors.length)];
+                    loadingBarContainer.appendChild(letterSpan);
+
+                    // Trigger animation
+                    setTimeout(() => {
+                        letterSpan.classList.add('active');
+                    }, 50); // Small delay for animation to kick in
+
+                    loadedCount++;
+                    setTimeout(animateLoadingBar, 100); // Adjust speed of loading letters
+                } else {
+                    // All letters loaded, show "Tap to Start" button
+                    tapToStartButton.classList.add('active');
+                    // No need to set color here, as it's handled by the .start-button style
+                    tapToStartButton.addEventListener('click', hideIntroScreen);
+                }
+            }
+
+            function hideIntroScreen() {
+                introScreen.classList.add('hidden');
+                mainContent.classList.add('active'); // Show main content
+                // Ensure main title animation starts after main content is visible
                 mainTitle.classList.add('animated');
-            }, { once: true }); // Ensure this listener only runs once
+                // Initialize the first letter content after the main content is visible
+                updateLetterContent();
+            }
+
+            // Start the loading animation when the page loads
+            animateLoadingBar();
         });
     </script>
 </body>

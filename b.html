@@ -11,13 +11,13 @@
             font-family: 'Fredoka One', 'Comic Sans MS', cursive, sans-serif;
             background-color: #b5ffb5; /* Softer green - KEPT THE SAME */
             margin: 0;
-            padding: 20px; /* Add some padding for the grid */
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 100vh;
-            overflow-y: auto; /* Allow scrolling if content overflows */
+            overflow-y: auto; /* Allow vertical scrolling */
             overflow-x: hidden; /* Prevent horizontal scroll */
             position: relative;
             background-image: radial-gradient(circle, #d3ffd3 5%, transparent 5%),
@@ -26,8 +26,40 @@
             background-position: 0 0, 40px 40px;
         }
 
+        /* Page Title */
+        .page-title {
+            font-size: 70px;
+            color: black; /* Black title */
+            text-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2),
+                         15px 15px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 10;
+            animation: bounceIn 1s ease-out forwards;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5) translateY(-100px);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.1) translateY(10px);
+                opacity: 1;
+            }
+            80% {
+                transform: scale(0.9) translateY(-5px);
+            }
+            100% {
+                transform: scale(1) translateY(0);
+            }
+        }
+
         .floating-shapes {
-            position: fixed; /* Fixed to viewport */
+            position: fixed;
             width: 100%;
             height: 100%;
             top: 0;
@@ -71,22 +103,22 @@
             position: relative;
             z-index: 10;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive grid */
-            gap: 25px; /* Space between letters */
-            max-width: 1200px; /* Max width for the grid */
-            width: 90%; /* Occupy most of the width */
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            width: 90%;
             padding: 30px;
-            background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent background for the grid */
+            background-color: transparent; /* Made transparent */
             border-radius: 30px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            margin-top: 50px; /* Push down from top */
-            margin-bottom: 50px; /* Space at the bottom */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Kept shadow for floating effect */
+            margin-bottom: 50px;
         }
 
+        /* Letter Card Design */
         .letter-card {
-            background: linear-gradient(135deg, #FFD166, #FFB36B); /* Warm gradient */
-            color: #333; /* Darker text for contrast */
-            border-radius: 20px;
+            background-color: white; /* Clean white background for the letter */
+            color: black; /* Font color is black */
+            border-radius: 20px; /* Rounded corners for the card */
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -94,46 +126,40 @@
             justify-content: center;
             font-size: 80px;
             font-weight: bold;
-            text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.1);
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1); /* Subtle text shadow */
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 0 #E84A5F,
-                        0 15px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
+            
+            /* Colorful, chunky border */
+            border: 8px solid; /* Will be set by JS for different colors */
+            border-bottom-width: 12px; /* Thicker bottom border for depth */
+
+            /* Strong, playful shadow */
+            box-shadow: 
+                8px 8px 0 rgba(0, 0, 0, 0.3), /* Offset shadow for pop-out effect */
+                15px 15px 20px rgba(0, 0, 0, 0.1); /* General shadow */
+            
             position: relative;
             overflow: hidden;
-            aspect-ratio: 1 / 1; /* Make cards square */
+            aspect-ratio: 1 / 1;
+            transform-style: preserve-3d;
         }
 
         .letter-card:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 15px 0 #E84A5F,
-                        0 25px 35px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, #FFB36B, #FFD166); /* Invert gradient on hover */
+            transform: translateY(-8px) scale(1.05); /* Lift and scale */
+            box-shadow: 
+                12px 12px 0 rgba(0, 0, 0, 0.4), /* Deeper offset shadow */
+                20px 20px 30px rgba(0, 0, 0, 0.2); /* Larger general shadow */
         }
 
         .letter-card:active {
-            transform: translateY(2px);
-            box-shadow: 0 4px 0 #E84A5F;
+            transform: translateY(2px) scale(0.98); /* Press down effect */
+            box-shadow: 
+                4px 4px 0 rgba(0, 0, 0, 0.2), /* Smaller offset shadow */
+                8px 8px 10px rgba(0, 0, 0, 0.1); /* Smaller general shadow */
         }
 
-        .letter-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%);
-            transform: scale(0);
-            opacity: 0;
-            transition: all 0.5s ease;
-        }
-
-        .letter-card:hover::before {
-            transform: scale(1);
-            opacity: 0.3;
-        }
-
+        /* Popup styles */
         .popup-container {
             position: fixed;
             top: 0;
@@ -164,7 +190,8 @@
             transform: scale(0.5) rotate(5deg);
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-            border: 8px solid #FFD166;
+            border: 8px solid #FF6BB5; /* Pink border for popup */
+            position: relative;
         }
 
         .popup-container.active .popup-content {
@@ -174,11 +201,42 @@
         .popup-image {
             width: 100%;
             display: block;
-            border-bottom: 8px solid #FFD166;
+            border-bottom: 8px solid #FF6BB5; /* Pink border for image bottom */
+        }
+
+        .popup-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(45deg, #E84A5F, #FF6BB5); /* Match button gradient */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 0 #C73A4F;
+            transition: all 0.2s ease;
+            z-index: 1001;
+        }
+
+        .popup-close-btn:hover {
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 6px 0 #C73A4F;
+        }
+
+        .popup-close-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 0 #C73A4F;
         }
 
         .bouncing-hearts {
-            position: fixed; /* Fixed to viewport */
+            position: fixed;
             width: 100%;
             height: 100%;
             top: 0;
@@ -223,6 +281,11 @@
 
         /* Responsive adjustments for grid */
         @media (max-width: 768px) {
+            .page-title {
+                font-size: 50px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
             .alphabet-grid-container {
                 grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
                 gap: 20px;
@@ -232,20 +295,44 @@
                 font-size: 60px;
                 padding: 15px;
             }
+            .popup-close-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+                top: 10px;
+                right: 10px;
+            }
         }
 
         @media (max-width: 480px) {
+            .page-title {
+                font-size: 35px;
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
             .alphabet-grid-container {
-                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                /* Single column for mobile */
+                grid-template-columns: 1fr; 
                 gap: 15px;
                 padding: 15px;
             }
             .letter-card {
-                font-size: 45px;
-                padding: 10px;
+                /* Smaller size for mobile cards */
+                font-size: 40px; /* Reduced font size */
+                padding: 8px; /* Reduced padding */
+                min-width: 70px; /* Ensure it doesn't get too small */
+                max-width: 100px; /* Cap max width for single column */
+                margin: 0 auto; /* Center cards in the single column */
             }
             .popup-content {
                 width: 90%;
+            }
+            .popup-close-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 18px;
+                top: 8px;
+                right: 8px;
             }
         }
     </style>
@@ -253,12 +340,15 @@
 <body>
     <div class="floating-shapes" id="floatingShapes"></div>
     
+    <h1 class="page-title">ALPHABET FUN LEARNING!</h1>
+
     <div class="alphabet-grid-container" id="alphabetGridContainer">
         <!-- Letters will be dynamically inserted here -->
     </div>
 
     <div class="popup-container" id="popupContainer">
         <div class="popup-content">
+            <button class="popup-close-btn" id="popupCloseBtn">X</button>
             <img class="popup-image" id="popupImage" src="" alt="Letter related image">
         </div>
     </div>
@@ -278,38 +368,39 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Data for each letter
             const lettersData = [
-                { letter: 'A', audio: 'audio/A.aac', image: 'img/aeg.jpg', alt: 'Playful cartoon dog with big eyes, tongue out, colorful background - A is for Aso (Dog)' },
-                { letter: 'B', audio: 'audio/B.aac', image: 'img/b.jpg', alt: 'Image for letter B' },
-                { letter: 'D', audio: 'audio/D.aac', image: 'img/d.jpg', alt: 'Image for letter D' },
-                { letter: 'E', audio: 'audio/E.aac', image: 'img/e.jpg', alt: 'Image for letter E' },
-                { letter: 'G', audio: 'audio/G.aac', image: 'img/g.jpg', alt: 'Image for letter G' },
-                { letter: 'H', audio: 'audio/H.aac', image: 'img/h.jpg', alt: 'Image for letter H' },
-                { letter: 'I', audio: 'audio/I.aac', image: 'img/i.jpg', alt: 'Image for letter I' },
-                { letter: 'K', audio: 'audio/K.aac', image: 'img/k.jpg', alt: 'Image for letter K' },
-                { letter: 'L', audio: 'audio/L.aac', image: 'img/l.jpg', alt: 'Image for letter L' },
-                { letter: 'M', audio: 'audio/M.aac', image: 'img/m.jpg', alt: 'Image for letter M' },
-                { letter: 'N', audio: 'audio/N.aac', image: 'img/n.jpg', alt: 'Image for letter N' },
-                { letter: 'NG', audio: 'audio/NG.aac', image: 'img/ng.jpg', alt: 'Image for letter NG' },
-                { letter: 'O', audio: 'audio/O.aac', image: 'img/o.jpg', alt: 'Image for letter O' },
-                { letter: 'P', audio: 'audio/P.aac', image: 'img/p.jpg', alt: 'Image for letter P' },
-                { letter: 'R', audio: 'audio/R.aac', image: 'img/r.jpg', alt: 'Image for letter R' },
-                { letter: 'S', audio: 'audio/S.aac', image: 'img/s.jpg', alt: 'Image for letter S' },
-                { letter: 'T', audio: 'audio/T.aac', image: 'img/t.jpg', alt: 'Image for letter T' },
-                { letter: 'U', audio: 'audio/U.aac', image: 'img/u.jpg', alt: 'Image for letter U' },
-                { letter: 'W', audio: 'audio/W.aac', image: 'img/w.jpg', alt: 'Image for letter W' },
-                { letter: 'Y', audio: 'audio/Y.aac', image: 'img/y.jpg', alt: 'Image for letter Y' }
+                { letter: 'A', audio: 'audio/A.aac', image: 'img/aeg.jpg', alt: 'Playful cartoon dog with big eyes, tongue out, colorful background - A is for Aso (Dog)', color: '#FF6BB5' }, /* Pink */
+                { letter: 'B', audio: 'audio/B.aac', image: 'img/b.jpg', alt: 'Image for letter B', color: '#FFD166' }, /* Yellow */
+                { letter: 'D', audio: 'audio/D.aac', image: 'img/d.jpg', alt: 'Image for letter D', color: '#9BF6FF' }, /* Light Blue */
+                { letter: 'E', audio: 'audio/E.aac', image: 'img/e.jpg', alt: 'Image for letter E', color: '#BDB2FF' }, /* Lavender */
+                { letter: 'G', audio: 'audio/G.aac', image: 'img/g.jpg', alt: 'Image for letter G', color: '#FAFF79' }, /* Light Yellow */
+                { letter: 'H', audio: 'audio/H.aac', image: 'img/h.jpg', alt: 'Image for letter H', color: '#FF9E9E' }, /* Light Red */
+                { letter: 'I', audio: 'audio/I.aac', image: 'img/i.jpg', alt: 'Image for letter I', color: '#FFC6FF' }, /* Light Pink */
+                { letter: 'K', audio: 'audio/K.aac', image: 'img/k.jpg', alt: 'Image for letter K', color: '#FF6BB5' },
+                { letter: 'L', audio: 'audio/L.aac', image: 'img/l.jpg', alt: 'Image for letter L', color: '#FFD166' },
+                { letter: 'M', audio: 'audio/M.aac', image: 'img/m.jpg', alt: 'Image for letter M', color: '#9BF6FF' },
+                { letter: 'N', audio: 'audio/N.aac', image: 'img/n.jpg', alt: 'Image for letter N', color: '#BDB2FF' },
+                { letter: 'NG', audio: 'audio/NG.aac', image: 'img/ng.jpg', alt: 'Image for letter NG', color: '#FAFF79' },
+                { letter: 'O', audio: 'audio/O.aac', image: 'img/o.jpg', alt: 'Image for letter O', color: '#FF9E9E' },
+                { letter: 'P', audio: 'audio/P.aac', image: 'img/p.jpg', alt: 'Image for letter P', color: '#FFC6FF' },
+                { letter: 'R', audio: 'audio/R.aac', image: 'img/r.jpg', alt: 'Image for letter R', color: '#FF6BB5' },
+                { letter: 'S', audio: 'audio/S.aac', image: 'img/s.jpg', alt: 'Image for letter S', color: '#FFD166' },
+                { letter: 'T', audio: 'audio/T.aac', image: 'img/t.jpg', alt: 'Image for letter T', color: '#9BF6FF' },
+                { letter: 'U', audio: 'audio/U.aac', image: 'img/u.jpg', alt: 'Image for letter U', color: '#BDB2FF' },
+                { letter: 'W', audio: 'audio/W.aac', image: 'img/w.jpg', alt: 'Image for letter W', color: '#FAFF79' },
+                { letter: 'Y', audio: 'audio/Y.aac', image: 'img/y.jpg', alt: 'Image for letter Y', color: '#FF9E9E' }
             ];
 
             // DOM Elements
             const alphabetGridContainer = document.getElementById('alphabetGridContainer');
             const popupContainer = document.getElementById('popupContainer');
             const popupImage = document.getElementById('popupImage');
+            const popupCloseBtn = document.getElementById('popupCloseBtn');
             const popSound = document.getElementById('popSound');
             const celebrateSound = document.getElementById('celebrateSound');
             const bouncingHearts = document.getElementById('bouncingHearts');
             const celebrationElement = document.getElementById('celebration');
             const floatingShapes = document.getElementById('floatingShapes');
-            const letterSound = document.getElementById('letterSound'); // Re-use the single audio element
+            const letterSound = document.getElementById('letterSound');
 
             // Function to generate letter cards
             function generateLetterCards() {
@@ -317,30 +408,30 @@
                     const letterCard = document.createElement('div');
                     letterCard.classList.add('letter-card');
                     letterCard.textContent = data.letter;
-                    letterCard.dataset.audio = data.audio; // Store audio path
-                    letterCard.dataset.image = data.image; // Store image path
-                    letterCard.dataset.alt = data.alt; // Store alt text
+                    letterCard.dataset.audio = data.audio;
+                    letterCard.dataset.image = data.image;
+                    letterCard.dataset.alt = data.alt;
+                    letterCard.style.borderColor = data.color; /* Set border color from data */
 
                     letterCard.addEventListener('click', function() {
-                        // Play pop sound
                         popSound.currentTime = 0;
                         popSound.play();
 
-                        // Animate card on click
-                        this.style.transform = 'translateY(2px)';
-                        this.style.boxShadow = '0 4px 0 #E84A5F';
+                        // Animate card on click (briefly)
+                        this.style.transition = 'none';
+                        this.style.transform = 'translateY(2px) scale(0.98)';
+                        this.style.boxShadow = '4px 4px 0 rgba(0, 0, 0, 0.2), 8px 8px 10px rgba(0, 0, 0, 0.1)';
                         setTimeout(() => {
-                            this.style.transform = 'translateY(0)';
-                            this.style.boxShadow = '0 8px 0 #E84A5F, 0 15px 20px rgba(0, 0, 0, 0.2)';
+                            this.style.transition = 'all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                            this.style.transform = 'translateY(0) scale(1)';
+                            this.style.boxShadow = '8px 8px 0 rgba(0, 0, 0, 0.3), 15px 15px 20px rgba(0, 0, 0, 0.1)';
                         }, 100);
 
-                        // Set and play letter sound
                         letterSound.src = this.dataset.audio;
-                        letterSound.load(); // Load the new audio
+                        letterSound.load();
                         letterSound.currentTime = 0;
                         letterSound.play();
                         
-                        // Set popup image
                         popupImage.src = this.dataset.image;
                         popupImage.alt = this.dataset.alt;
 
@@ -352,14 +443,13 @@
                             triggerCelebration();
                         }, 3000);
 
-                        // Trigger bouncing hearts
                         triggerBouncingHearts();
                     });
                     alphabetGridContainer.appendChild(letterCard);
                 });
             }
 
-            // Close popup when clicking outside
+            // Close popup when clicking outside or on close button
             popupContainer.addEventListener('click', function(event) {
                 if (event.target === popupContainer) {
                     popupContainer.classList.remove('active');
@@ -367,7 +457,12 @@
                 }
             });
 
-            // Floating Shapes Background Generation (re-used function)
+            popupCloseBtn.addEventListener('click', function() {
+                popupContainer.classList.remove('active');
+                celebrationElement.classList.remove('active');
+            });
+
+            // Floating Shapes Background Generation
             const shapes = ['circle', 'triangle', 'square', 'pentagon', 'star'];
             const colors = ['#FF9E9E', '#FFD6A5', '#FAFF79', '#9BF6FF', '#BDB2FF', '#FFC6FF'];
             
@@ -436,11 +531,10 @@
             function triggerCelebration() {
                 celebrationElement.classList.add('active');
                 const celebrationShapes = document.getElementById('celebrationShapes');
-                celebrationShapes.innerHTML = ''; // Clear previous shapes
+                celebrationShapes.innerHTML = '';
 
-                createFloatingShapes(celebrationShapes, 30, [20, 50], [5, 5], [0, 2], 1, 0); // Smaller, faster, fully opaque shapes
+                createFloatingShapes(celebrationShapes, 30, [20, 50], [5, 5], [0, 2], 1, 0);
 
-                // Hide celebration after a few seconds
                 setTimeout(() => {
                     celebrationElement.classList.remove('active');
                 }, 2000);

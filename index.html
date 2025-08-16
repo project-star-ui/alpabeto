@@ -65,44 +65,7 @@
             }
         }
 
-        .main-title {
-            font-family: 'Fredoka One', cursive;
-            font-size: 60px;
-            color: #333;
-            text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
-            text-align: center;
-            z-index: 10;
-            animation: bounceIn 1s ease-out; /* Initial bounce animation */
-        }
-
-        @keyframes bounceIn {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-            70% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* New animation for the main title to make it continuously move */
-        @keyframes titleFloat {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .main-title.animated {
-            animation: titleFloat 3s ease-in-out infinite;
-        }
+        /* Removed .main-title styles as the element is removed */
 
         .letter-container {
             position: relative;
@@ -124,8 +87,8 @@
             transform-style: preserve-3d;
             min-width: 150px; /* Ensure letter doesn't shrink too much */
             text-align: center;
-            animation: letterBounce 2s infinite ease-in-out, glow 2s infinite alternate; /* Added glow animation */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Initial subtle shadow for depth */
+            animation: letterBounce 2s infinite ease-in-out; /* Removed glow animation */
+            /* Removed box-shadow for the letter */
         }
 
         @keyframes letterBounce {
@@ -137,22 +100,22 @@
             }
         }
 
-        /* New glow animation for the letter */
-        @keyframes glow {
+        /* Removed glow animation for the letter */
+        /* @keyframes glow {
             0% {
                 box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.2);
             }
             100% {
                 box-shadow: 0 0 15px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 0, 0, 0.4);
             }
-        }
+        } */
 
         .letter:hover {
             transform: scale(1.1) rotateY(20deg);
             text-shadow: 12px 12px 0 rgba(0, 0, 0, 0.2),
                          20px 20px 30px rgba(0, 0, 0, 0.15);
             animation: none; /* Stop continuous bounce and glow on hover */
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.6); /* Stronger glow on hover */
+            /* Removed box-shadow on hover */
         }
 
         .nav-button {
@@ -464,10 +427,7 @@
         }
 
         @media (max-width: 768px) {
-            .main-title {
-                font-size: 45px;
-                margin-bottom: 30px;
-            }
+            /* Removed .main-title styles for media query */
             .letter {
                 font-size: 180px;
             }
@@ -502,10 +462,7 @@
         }
 
         @media (max-width: 480px) {
-            .main-title {
-                font-size: 35px;
-                margin-bottom: 20px;
-            }
+            /* Removed .main-title styles for media query */
             .letter {
                 font-size: 120px;
             }
@@ -552,7 +509,8 @@
     <div id="main-content">
         <div class="floating-shapes" id="floatingShapes"></div>
         
-        <h1 class="main-title">Alphabet Fun Learning!</h1>
+        <!-- Removed the main title -->
+        <!-- <h1 class="main-title">Alphabet Fun Learning!</h1> -->
 
         <div class="letter-container">
             <button class="nav-button" id="prevLetterBtn">&lt;</button>
@@ -622,7 +580,8 @@
             const bouncingHearts = document.getElementById('bouncingHearts');
             const celebrationElement = document.getElementById('celebration');
             const floatingShapes = document.getElementById('floatingShapes');
-            const mainTitle = document.querySelector('.main-title'); // Get the main title element
+            // Removed mainTitle as the element is removed
+            // const mainTitle = document.querySelector('.main-title'); 
 
             // Intro Screen Elements
             const introScreen = document.getElementById('intro-screen');
@@ -813,8 +772,8 @@
             function hideIntroScreen() {
                 introScreen.classList.add('hidden');
                 mainContent.classList.add('active'); // Show main content
-                // Ensure main title animation starts after main content is visible
-                mainTitle.classList.add('animated');
+                // Removed mainTitle animation as the element is removed
+                // mainTitle.classList.add('animated');
                 // Initialize the first letter content after the main content is visible
                 updateLetterContent();
             }
